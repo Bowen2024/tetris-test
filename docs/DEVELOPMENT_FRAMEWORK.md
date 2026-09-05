@@ -38,11 +38,13 @@ tetris-test/
 │       ├── input_handler.py
 │       └── renderer.py
 └── tests/
+    ├── test_main.py
     ├── test_piece.py
     ├── test_board.py
     ├── test_randomizer.py
     ├── test_scoring.py
-    └── test_game.py
+    ├── test_game.py
+    └── test_input_handler.py
 ```
 
 第二里程碑再增加 `storage.py`、`test_storage.py` 和声音资源。
@@ -275,7 +277,7 @@ class GameAction(Enum):
 | `R` | `RESTART` | Game Over 时重开 |
 | `Enter` | `START` | Ready 时开始 |
 
-只处理 `KEYDOWN`。首版不实现按键长按的自定义 DAS/ARR，使用 pygame/操作系统默认重复行为。
+只处理 `KEYDOWN`。首版不调用 `pygame.key.set_repeat()`：每收到一次 `KEYDOWN` 只执行一次动作，不支持长按连续移动。玩家需要重复按键来重复移动；DAS/ARR 留到后续版本。
 
 ## 10. 游戏状态转换
 
@@ -389,12 +391,13 @@ while self.fall_accumulator >= self.fall_interval:
 
 ### 阶段 1：项目基线
 
-产物：`pyproject.toml`、`.gitignore`、全部空包目录、最小 `main.py`、README 启动说明。
+产物：`pyproject.toml`、`.gitignore`、全部空包目录、最小 `main.py`、README 启动说明，以及 `tests/test_main.py`。
 
 验收：
 
 - `pip install -e ".[dev]"` 成功。
 - `tetris` 打开 pygame 窗口并可正常关闭。
+- `tests/test_main.py` 至少验证 `from tetris.main import main` 可以成功导入，不在导入时创建窗口或启动循环。
 - `pytest`、`ruff check .`、`ruff format --check .` 通过。
 - 不实现游戏规则。
 
@@ -443,12 +446,13 @@ while self.fall_accumulator >= self.fall_interval:
 
 ### 阶段 6：输入
 
-产物：`input_handler.py` 及映射测试，Game 接收并执行动作。
+产物：`input_handler.py`、`tests/test_input_handler.py`，以及 Game 接收并执行动作的连接代码。
 
 验收：
 
 - 每个按键只映射到规定动作。
 - InputHandler 不修改 Game、Board 或 Piece。
+- 单个 `KEYDOWN` 只产生一个动作；不调用 `pygame.key.set_repeat()`。
 - 非 PLAYING 状态忽略移动、旋转和下落动作。
 
 ### 阶段 7：Renderer 与完整可玩流程
@@ -482,4 +486,4 @@ while self.fall_accumulator >= self.fall_interval:
 
 ## 17. Coding Agent 的第一个任务
 
-> 只完成“阶段 1：项目基线”。创建本文档规定的目录，编写 `pyproject.toml`、`.gitignore`、README 启动说明和最小 pygame 空窗口，配置 `tetris` 命令入口。暂不实现方块或游戏规则。完成后运行 `pytest`、`ruff check .` 和 `ruff format --check .`，并报告文件变化、命令输出、人工启动结果和剩余风险。
+> 只完成“阶段 1：项目基线”。创建本文档规定的目录，编写 `pyproject.toml`、`.gitignore`、README 启动说明、最小 pygame 空窗口和 `tests/test_main.py`，配置 `tetris` 命令入口。最小测试必须验证入口模块可导入且导入时不会启动游戏循环。暂不实现方块或游戏规则。完成后运行 `pytest`、`ruff check .` 和 `ruff format --check .`，并报告文件变化、命令输出、人工启动结果和剩余风险。
