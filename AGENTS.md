@@ -11,17 +11,17 @@ Before planning or editing code, read these files in order:
 
 Treat `docs/DEVELOPMENT_FRAMEWORK.md` as the product and architecture specification. Do not silently change its scope or rules.
 
-## Current Phase
+## Complete Project Mission
 
-Start with the **project baseline** only:
+Implement the complete playable first version described in `docs/DEVELOPMENT_FRAMEWORK.md`. Execute phases 1 through 7 in order, beginning with the project baseline:
 
 - Create the `src/tetris/` and `tests/` package layout described in the framework.
 - Add `pyproject.toml` and `.gitignore`.
 - Add the smallest pygame window that starts through the `tetris` console command and exits cleanly.
 - Configure pytest and Ruff.
-- Do not implement pieces, board rules, scoring, rendering, persistence, sounds, Hold, Ghost Piece, SRS, wall kicks, or lock delay in this phase.
+- During phase 1, do not implement pieces, board rules, scoring, rendering, persistence, sounds, Hold, Ghost Piece, SRS, wall kicks, or lock delay.
 
-After the baseline is reviewed, implement the remaining phases in the exact order listed in `docs/DEVELOPMENT_FRAMEWORK.md`.
+After each phase passes its specified validation, continue automatically to the next phase. Do not stop after the baseline unless a real blocker requires user input. The task is complete only when phase 7 is implemented, all automated checks pass, and the full game has been manually played through.
 
 ## Architecture Rules
 
@@ -59,4 +59,4 @@ Every implementation handoff must report:
 4. Manual behavior verified, when applicable.
 5. Remaining risks or intentionally deferred work.
 
-Keep each change limited to one development phase. Do not combine later features into an earlier milestone.
+Keep implementation work ordered by phase. Do not pull later features into an earlier milestone, but continue through all phases until the complete first version is delivered.

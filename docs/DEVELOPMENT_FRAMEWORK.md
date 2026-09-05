@@ -484,6 +484,6 @@ while self.fall_accumulator >= self.fall_interval:
 - [ ] 消行分数、等级和速度符合固定公式。
 - [ ] 状态表中所有允许和忽略的转换均被覆盖。
 
-## 17. Coding Agent 的第一个任务
+## 17. Coding Agent 的完整任务
 
-> 只完成“阶段 1：项目基线”。创建本文档规定的目录，编写 `pyproject.toml`、`.gitignore`、README 启动说明、最小 pygame 空窗口和 `tests/test_main.py`，配置 `tetris` 命令入口。最小测试必须验证入口模块可导入且导入时不会启动游戏循环。暂不实现方块或游戏规则。完成后运行 `pytest`、`ruff check .` 和 `ruff format --check .`，并报告文件变化、命令输出、人工启动结果和剩余风险。
+> 完成本文档定义的整个俄罗斯方块首版。严格按照阶段 1–7 顺序实施：先完成项目基线并验证，再依次实现 Shapes/Piece、Board、Randomizer、计分与状态机、输入和 Renderer。每个阶段必须满足对应产物与验收条件，运行全部既有 `pytest`、`ruff check .` 和 `ruff format --check .`；验证通过后自动继续下一阶段，不要在阶段 1 停止，也不要等待聊天中再次授权。最终交付必须保证 `tetris` 可启动并完整游玩，所有自动检查通过，并报告文件变化、设计对应关系、命令结果、人工试玩结果和剩余风险。只有遇到无法从本仓库规格解决的真实阻塞时才向用户提问。
